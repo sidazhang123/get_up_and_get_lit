@@ -1,0 +1,10 @@
+timestamp=2026-03-27 22:46:35.873 | event=task_updated | result=ok | taskId=3 | taskName=3
+timestamp=2026-03-27 22:46:44.811 | event=task_updated | result=ok | taskId=1 | taskName=1
+timestamp=2026-03-27 22:46:46.223 | event=reserve_all_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-27 22:46:46.225 | event=scheduler_started | result=ok | taskId= | taskName= | info=batchId=c466da8f-5ba8-49e5-8973-674cc0046b21
+timestamp=2026-03-27 22:46:46.379 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=21469 oom_score_adj=-1000
+timestamp=2026-03-27 22:46:46.391 | event=next_alarm_scheduled | result=ok | taskId=3 | taskName=3 | info=triggerAt=1774622820000
+timestamp=2026-03-27 22:47:00.143 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=21469 oom_score_adj=-1000
+timestamp=2026-03-27 22:47:01.467 | event=root_playback_window_prepared | result=ok | taskId= | taskName= | info=playback_window_ready
+timestamp=2026-03-27 22:47:01.484 | event=task_triggered | result=ok | taskId=3 | taskName=3
+timestamp=2026-03-27 22:47:01.533 | event=next_alarm_scheduled | result=ok | taskId=1 | taskName=1 | info=triggerAt=1774623540000

@@ -1,0 +1,4 @@
+timestamp=2026-03-27 22:51:00.974 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=22150 oom_score_adj=-1000
+timestamp=2026-03-27 22:51:01.013 | event=next_alarm_scheduled | result=ok | taskId=1 | taskName=1 | info=triggerAt=1774623540000
+timestamp=2026-03-27 22:51:11.546 | event=cancel_reserve_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-27 22:51:11.601 | event=scheduler_stopped | result=cancelled | taskId= | taskName=

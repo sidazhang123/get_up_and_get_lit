@@ -1,0 +1,13 @@
+<resources>
+    <color name="brand_primary">#0F4C5C</color>
+    <color name="brand_primary_variant">#08313A</color>
+    <color name="brand_secondary">#E36414</color>
+    <color name="surface">#FFF7EF</color>
+    <color name="surface_dark">#141414</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="status_green">#246A25</color>
+    <color name="status_red">#9A031E</color>
+    <color name="swipe_edit_green">#2E7D32</color>
+    <color name="swipe_delete_red">#E53935</color>
+</resources>

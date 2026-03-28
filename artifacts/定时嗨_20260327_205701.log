@@ -1,0 +1,15 @@
+timestamp=2026-03-27 20:57:01.606 | event=task_created | result=ok | taskId=1 | taskName=1
+timestamp=2026-03-27 20:57:07.559 | event=task_updated | result=ok | taskId=1 | taskName=1
+timestamp=2026-03-27 20:57:34.151 | event=task_created | result=ok | taskId=2 | taskName=2
+timestamp=2026-03-27 20:58:13.202 | event=task_created | result=ok | taskId=3 | taskName=3
+timestamp=2026-03-27 20:58:15.369 | event=reserve_all_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-27 20:58:15.370 | event=scheduler_started | result=ok | taskId= | taskName= | info=batchId=5f2423d8-8bb4-40f3-80ec-fb2a76273373
+timestamp=2026-03-27 21:00:00.050 | event=task_triggered | result=ok | taskId=1 | taskName=1
+timestamp=2026-03-27 21:00:00.113 | event=playback_started | result=ok | taskId=1 | taskName=1
+timestamp=2026-03-27 21:02:31.806 | event=playback_finished | result=ok | taskId=1 | taskName=1
+timestamp=2026-03-27 21:20:36.752 | event=task_triggered | result=ok | taskId=2 | taskName=2
+timestamp=2026-03-27 21:20:36.811 | event=playback_started | result=ok | taskId=2 | taskName=2
+timestamp=2026-03-27 21:20:36.874 | event=task_triggered | result=ok | taskId=3 | taskName=3
+timestamp=2026-03-27 21:20:36.912 | event=playback_started | result=ok | taskId=3 | taskName=3
+timestamp=2026-03-27 21:20:36.927 | event=scheduler_stopped | result=completed | taskId= | taskName= | info=all tasks finished
+timestamp=2026-03-27 21:23:10.690 | event=playback_finished | result=ok | taskId=3 | taskName=3
