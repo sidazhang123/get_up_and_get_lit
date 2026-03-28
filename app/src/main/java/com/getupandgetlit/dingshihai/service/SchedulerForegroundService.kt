@@ -263,7 +263,12 @@ class SchedulerForegroundService : Service() {
             is PlaybackEvent.Finished -> {
                 clearCurrentPlayingIfNeeded(event.taskId)
                 container.taskRepository.getTaskById(event.taskId)?.let {
-                    container.appLogger.log(event = "playback_finished", result = "ok", task = it)
+                    container.appLogger.log(
+                        event = "playback_finished",
+                        result = "ok",
+                        task = it,
+                        message = "reason=${event.finishReason.logValue} hadTruncatedRounds=${event.hadTruncatedRounds}",
+                    )
                 }
                 stopIfIdle()
             }

@@ -73,6 +73,7 @@ class TaskFormActivity : AppCompatActivity() {
             if (checked) viewModel.updatePlayMode(PlayMode.INTERVAL)
         }
         binding.nameInput.doAfterTextChangedCompat(viewModel::updateName)
+        binding.maxPlaybackMinutesInput.doAfterTextChangedCompat(viewModel::updateMaxPlaybackMinutes)
         binding.loopCountInput.doAfterTextChangedCompat(viewModel::updateLoopCount)
         binding.intervalMinInput.doAfterTextChangedCompat(viewModel::updateIntervalMin)
         binding.intervalMaxInput.doAfterTextChangedCompat(viewModel::updateIntervalMax)
@@ -95,6 +96,15 @@ class TaskFormActivity : AppCompatActivity() {
                 }
                 syncTextIfNeeded(binding.timeField.text?.toString().orEmpty(), timeText) {
                     binding.timeField.setText(timeText)
+                }
+                val maxPlaybackText = state.draft.maxPlaybackMinutes
+                    ?.toString()
+                    .orEmpty()
+                syncTextIfNeeded(
+                    binding.maxPlaybackMinutesInput.text?.toString().orEmpty(),
+                    maxPlaybackText,
+                ) {
+                    binding.maxPlaybackMinutesInput.setText(maxPlaybackText)
                 }
                 binding.fileNameView.text = state.draft.fileName
                 binding.singleMode.isChecked = state.draft.playMode == PlayMode.SINGLE

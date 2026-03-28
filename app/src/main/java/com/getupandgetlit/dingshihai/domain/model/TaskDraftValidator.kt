@@ -17,6 +17,11 @@ object TaskDraftValidator {
         if (duplicateExists) {
             return TaskValidationResult.DuplicateTime
         }
+        val maxPlaybackMinutes = draft.maxPlaybackMinutes
+            ?: return TaskValidationResult.InvalidMaxPlaybackMinutes
+        if (maxPlaybackMinutes < 0) {
+            return TaskValidationResult.InvalidMaxPlaybackMinutes
+        }
         if (draft.playMode == PlayMode.INTERVAL) {
             val loopCount = draft.loopCount
             val min = draft.intervalMinSec
@@ -37,4 +42,3 @@ object TaskDraftValidator {
         return TaskValidationResult.Valid
     }
 }
-

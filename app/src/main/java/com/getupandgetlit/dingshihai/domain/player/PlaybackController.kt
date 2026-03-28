@@ -32,10 +32,19 @@ import kotlinx.coroutines.withContext
 
 sealed class PlaybackEvent {
     data class Started(val taskId: Long) : PlaybackEvent()
-    data class Finished(val taskId: Long) : PlaybackEvent()
+    data class Finished(
+        val taskId: Long,
+        val finishReason: PlaybackFinishReason,
+        val hadTruncatedRounds: Boolean,
+    ) : PlaybackEvent()
     data class Failed(val taskId: Long, val message: String) : PlaybackEvent()
     data class BluetoothLost(val taskId: Long) : PlaybackEvent()
     data class Stopped(val taskId: Long, val reason: String) : PlaybackEvent()
+}
+
+enum class PlaybackFinishReason(val logValue: String) {
+    NATURAL("natural"),
+    TRUNCATED_BY_LIMIT("truncated_by_limit"),
 }
 
 class PlaybackController(
@@ -80,7 +89,13 @@ class PlaybackController(
                     )
                 }
                 when (result) {
-                    PlaybackResult.Finished -> _events.emit(PlaybackEvent.Finished(task.id))
+                    is PlaybackResult.Finished -> _events.emit(
+                        PlaybackEvent.Finished(
+                            taskId = task.id,
+                            finishReason = result.finishReason,
+                            hadTruncatedRounds = result.hadTruncatedRounds,
+                        )
+                    )
                     PlaybackResult.BluetoothLost -> _events.emit(PlaybackEvent.BluetoothLost(task.id))
                     is PlaybackResult.Failed -> _events.emit(PlaybackEvent.Failed(task.id, result.message))
                     is PlaybackResult.Stopped -> _events.emit(PlaybackEvent.Stopped(task.id, result.reason))
@@ -126,16 +141,31 @@ class PlaybackController(
         } else {
             1
         }
+        val maxPlaybackDurationMs = computeMaxPlaybackDurationMs(task.maxPlaybackMinutes)
+        var hadTruncatedRounds = false
         repeat(iterations) { index ->
             if (!bluetoothChecker.isBluetoothAudioAvailable()) {
                 return PlaybackResult.BluetoothLost
             }
-            when (val onceResult = playOnce(task.fileUri, onStarted)) {
+            val onceResult = playOnce(task.fileUri, maxPlaybackDurationMs, onStarted)
+            when (onceResult) {
                 PlaybackOnceResult.Completed -> Unit
+                PlaybackOnceResult.TruncatedByLimit -> hadTruncatedRounds = true
                 PlaybackOnceResult.BluetoothLost -> return PlaybackResult.BluetoothLost
                 is PlaybackOnceResult.Failed -> return PlaybackResult.Failed(onceResult.message)
                 is PlaybackOnceResult.Stopped -> return PlaybackResult.Stopped(onceResult.reason)
             }
+            appLogger.log(
+                event = "playback_round_finished",
+                result = "ok",
+                task = task,
+                message = "round=${index + 1}/$iterations reason=${
+                    when (onceResult) {
+                        PlaybackOnceResult.TruncatedByLimit -> PlaybackFinishReason.TRUNCATED_BY_LIMIT.logValue
+                        else -> PlaybackFinishReason.NATURAL.logValue
+                    }
+                }",
+            )
             if (index < iterations - 1) {
                 val minSec = task.intervalMinSec ?: return PlaybackResult.Failed("intervalMinSec missing")
                 val maxSec = task.intervalMaxSec ?: return PlaybackResult.Failed("intervalMaxSec missing")
@@ -151,11 +181,19 @@ class PlaybackController(
                 }
             }
         }
-        return PlaybackResult.Finished
+        return PlaybackResult.Finished(
+            finishReason = if (hadTruncatedRounds) {
+                PlaybackFinishReason.TRUNCATED_BY_LIMIT
+            } else {
+                PlaybackFinishReason.NATURAL
+            },
+            hadTruncatedRounds = hadTruncatedRounds,
+        )
     }
 
     private suspend fun playOnce(
         fileUri: String,
+        maxPlaybackDurationMs: Long?,
         onStarted: suspend () -> Unit,
     ): PlaybackOnceResult {
         val completion = CompletableDeferred<PlaybackOnceResult>()
@@ -210,10 +248,16 @@ class PlaybackController(
                 null -> onStarted()
                 else -> return startResult
             }
+            var playbackElapsedMs = 0L
             while (!completion.isCompleted) {
                 delay(250)
+                playbackElapsedMs += 250L
                 if (!bluetoothChecker.isBluetoothAudioAvailable()) {
                     completion.complete(PlaybackOnceResult.BluetoothLost)
+                    break
+                }
+                if (maxPlaybackDurationMs != null && playbackElapsedMs >= maxPlaybackDurationMs) {
+                    completion.complete(PlaybackOnceResult.TruncatedByLimit)
                     break
                 }
             }
@@ -296,8 +340,18 @@ class PlaybackController(
     }
 }
 
+internal fun computeMaxPlaybackDurationMs(maxPlaybackMinutes: Int): Long? {
+    if (maxPlaybackMinutes <= 0) {
+        return null
+    }
+    return maxPlaybackMinutes.toLong() * 60_000L
+}
+
 private sealed class PlaybackResult {
-    data object Finished : PlaybackResult()
+    data class Finished(
+        val finishReason: PlaybackFinishReason,
+        val hadTruncatedRounds: Boolean,
+    ) : PlaybackResult()
     data object BluetoothLost : PlaybackResult()
     data class Failed(val message: String) : PlaybackResult()
     data class Stopped(val reason: String) : PlaybackResult()
@@ -305,6 +359,7 @@ private sealed class PlaybackResult {
 
 private sealed class PlaybackOnceResult {
     data object Completed : PlaybackOnceResult()
+    data object TruncatedByLimit : PlaybackOnceResult()
     data object BluetoothLost : PlaybackOnceResult()
     data class Failed(val message: String) : PlaybackOnceResult()
     data class Stopped(val reason: String) : PlaybackOnceResult()

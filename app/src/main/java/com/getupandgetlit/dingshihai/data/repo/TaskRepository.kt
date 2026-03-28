@@ -57,6 +57,7 @@ class TaskRepository(
             loopCount = draft.loopCount,
             intervalMinSec = draft.intervalMinSec,
             intervalMaxSec = draft.intervalMaxSec,
+            maxPlaybackMinutes = requireNotNull(draft.maxPlaybackMinutes),
             status = TaskStatus.UNTRIGGERED.value,
             scheduledAtEpochMs = null,
             createdAt = now,
@@ -80,6 +81,7 @@ class TaskRepository(
                 loopCount = draft.loopCount,
                 intervalMinSec = draft.intervalMinSec,
                 intervalMaxSec = draft.intervalMaxSec,
+                maxPlaybackMinutes = requireNotNull(draft.maxPlaybackMinutes),
                 updatedAt = now,
             )
         )

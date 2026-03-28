@@ -7,5 +7,5 @@ sealed class TaskValidationResult {
     data object DuplicateTime : TaskValidationResult()
     data object InvalidFileType : TaskValidationResult()
     data object InvalidInterval : TaskValidationResult()
+    data object InvalidMaxPlaybackMinutes : TaskValidationResult()
 }
-

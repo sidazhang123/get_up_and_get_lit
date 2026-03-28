@@ -62,6 +62,19 @@ class TaskFormViewModel(
         updateDraft { copy(intervalMaxSec = value.toIntOrNull()) }
     }
 
+    fun updateMaxPlaybackMinutes(value: String) {
+        val normalized = value.trim()
+        updateDraft {
+            copy(
+                maxPlaybackMinutes = if (normalized.isBlank()) {
+                    0
+                } else {
+                    normalized.toIntOrNull()
+                }
+            )
+        }
+    }
+
     suspend fun save(): TaskSaveResult {
         return when (repository.validateTask(_uiState.value.draft)) {
             TaskValidationResult.Valid -> {
@@ -83,6 +96,7 @@ class TaskFormViewModel(
             TaskValidationResult.DuplicateTime -> TaskSaveResult.Error(R.string.duplicate_time)
             TaskValidationResult.InvalidFileType -> TaskSaveResult.Error(R.string.invalid_file_type)
             TaskValidationResult.InvalidInterval -> TaskSaveResult.Error(R.string.invalid_interval)
+            TaskValidationResult.InvalidMaxPlaybackMinutes -> TaskSaveResult.Error(R.string.invalid_max_playback_minutes)
         }
     }
 
@@ -100,6 +114,7 @@ class TaskFormViewModel(
                 loopCount = task.loopCount,
                 intervalMinSec = task.intervalMinSec,
                 intervalMaxSec = task.intervalMaxSec,
+                maxPlaybackMinutes = task.maxPlaybackMinutes,
             ),
         )
     }

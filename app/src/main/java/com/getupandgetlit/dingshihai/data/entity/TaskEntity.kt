@@ -15,9 +15,9 @@ data class TaskEntity(
     val loopCount: Int?,
     val intervalMinSec: Int?,
     val intervalMaxSec: Int?,
+    val maxPlaybackMinutes: Int,
     val status: String,
     val scheduledAtEpochMs: Long?,
     val createdAt: Long,
     val updatedAt: Long,
 )
-

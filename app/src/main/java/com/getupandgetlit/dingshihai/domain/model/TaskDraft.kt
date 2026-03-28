@@ -11,5 +11,5 @@ data class TaskDraft(
     val loopCount: Int? = null,
     val intervalMinSec: Int? = null,
     val intervalMaxSec: Int? = null,
+    val maxPlaybackMinutes: Int? = 0,
 )
-

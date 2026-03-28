@@ -58,5 +58,36 @@ class TaskDraftValidatorTest {
 
         assertEquals(TaskValidationResult.InvalidInterval, result)
     }
-}
 
+    @Test
+    fun `accepts zero max playback minutes`() {
+        val result = TaskDraftValidator.validate(
+            draft = TaskDraft(
+                startHour = 8,
+                startMinute = 30,
+                fileUri = "content://demo/file.mp3",
+                fileName = "demo.mp3",
+                maxPlaybackMinutes = 0,
+            ),
+            duplicateExists = false,
+        )
+
+        assertEquals(TaskValidationResult.Valid, result)
+    }
+
+    @Test
+    fun `rejects negative max playback minutes`() {
+        val result = TaskDraftValidator.validate(
+            draft = TaskDraft(
+                startHour = 8,
+                startMinute = 30,
+                fileUri = "content://demo/file.mp3",
+                fileName = "demo.mp3",
+                maxPlaybackMinutes = -1,
+            ),
+            duplicateExists = false,
+        )
+
+        assertEquals(TaskValidationResult.InvalidMaxPlaybackMinutes, result)
+    }
+}
