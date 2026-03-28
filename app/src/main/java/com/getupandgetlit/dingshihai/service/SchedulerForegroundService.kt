@@ -24,7 +24,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -69,10 +68,10 @@ class SchedulerForegroundService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onDestroy() {
-        runBlocking {
+        releaseWakeLocks()
+        serviceScope.launch {
             restoreBrightnessIfNeeded()
         }
-        releaseWakeLocks()
         serviceJob.cancel()
         super.onDestroy()
     }
