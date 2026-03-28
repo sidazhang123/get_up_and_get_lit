@@ -1,0 +1,172 @@
+timestamp=2026-03-27 23:31:24.008 | event=task_updated | result=ok | taskId=3 | taskName=3
+timestamp=2026-03-27 23:31:46.872 | event=task_updated | result=ok | taskId=1 | taskName=1
+timestamp=2026-03-27 23:31:48.297 | event=reserve_all_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-27 23:31:48.299 | event=scheduler_started | result=ok | taskId= | taskName= | info=batchId=482b6fe3-4c7b-4bfb-8705-3831354aa171
+timestamp=2026-03-27 23:31:48.448 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-27 23:31:48.463 | event=next_alarm_scheduled | result=ok | taskId=3 | taskName=3 | info=triggerAt=1774625700000
+timestamp=2026-03-27 23:31:56.035 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-27 23:31:56.090 | event=next_alarm_scheduled | result=ok | taskId=3 | taskName=3 | info=triggerAt=1774625700000
+timestamp=2026-03-27 23:35:00.112 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-27 23:35:00.134 | event=task_triggered | result=ok | taskId=3 | taskName=3
+timestamp=2026-03-27 23:35:00.196 | event=next_alarm_scheduled | result=ok | taskId=1 | taskName=1 | info=triggerAt=1774643340000
+timestamp=2026-03-27 23:35:00.205 | event=bluetooth_route_prepared | result=ok | taskId= | taskName= | info=a2dp=true headset=true device=true
+timestamp=2026-03-27 23:35:01.548 | event=root_playback_window_prepared | result=ok | taskId= | taskName= | info=playback_window_ready
+timestamp=2026-03-27 23:35:04.272 | event=root_brightness_dimmed | result=ok | taskId= | taskName= | info=mode=0 brightness=1 output=brightness_dimmed
+timestamp=2026-03-27 23:35:04.278 | event=playback_started | result=ok | taskId=3 | taskName=3
+timestamp=2026-03-27 23:35:10.268 | event=bluetooth_route_prepared | result=ok | taskId= | taskName= | info=a2dp=true headset=true device=true
+timestamp=2026-03-27 23:35:11.334 | event=root_playback_window_prepared | result=ok | taskId= | taskName= | info=playback_window_ready
+timestamp=2026-03-27 23:35:17.748 | event=playback_finished | result=ok | taskId=3 | taskName=3
+timestamp=2026-03-27 23:36:38.670 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-27 23:36:38.739 | event=next_alarm_scheduled | result=ok | taskId=1 | taskName=1 | info=triggerAt=1774643340000
+timestamp=2026-03-28 04:29:00.128 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 04:29:00.182 | event=task_triggered | result=ok | taskId=1 | taskName=1
+timestamp=2026-03-28 04:29:00.261 | event=scheduler_stopped | result=completed | taskId= | taskName= | info=all tasks finished
+timestamp=2026-03-28 04:29:00.266 | event=bluetooth_route_prepared | result=ok | taskId= | taskName= | info=a2dp=true headset=true device=true
+timestamp=2026-03-28 04:29:02.048 | event=root_playback_window_prepared | result=ok | taskId= | taskName= | info=playback_window_ready
+timestamp=2026-03-28 04:29:02.299 | event=playback_started | result=ok | taskId=1 | taskName=1
+timestamp=2026-03-28 04:30:39.238 | event=bluetooth_route_prepared | result=ok | taskId= | taskName= | info=a2dp=true headset=true device=true
+timestamp=2026-03-28 04:30:40.482 | event=root_playback_window_prepared | result=ok | taskId= | taskName= | info=playback_window_ready
+timestamp=2026-03-28 04:30:47.198 | event=playback_finished | result=ok | taskId=1 | taskName=1
+timestamp=2026-03-28 04:30:48.369 | event=root_brightness_restored | result=ok | taskId= | taskName= | info=mode=0 brightness=1 output=brightness_restored
+timestamp=2026-03-28 08:30:34.050 | event=task_updated | result=ok | taskId=3 | taskName=3
+timestamp=2026-03-28 08:31:45.461 | event=reserve_all_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-28 08:31:45.467 | event=scheduler_started | result=ok | taskId= | taskName= | info=batchId=219b422d-08c1-4211-b052-7f2d11e9d75f
+timestamp=2026-03-28 08:31:45.601 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 08:31:45.616 | event=next_alarm_scheduled | result=ok | taskId=3 | taskName=3 | info=triggerAt=1774712100000
+timestamp=2026-03-28 08:32:02.473 | event=cancel_reserve_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-28 08:32:02.519 | event=scheduler_stopped | result=cancelled | taskId= | taskName=
+timestamp=2026-03-28 08:32:18.001 | event=task_deleted | result=ok | taskId=1 | taskName=1
+timestamp=2026-03-28 08:34:25.722 | event=task_created | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 08:34:31.000 | event=reserve_all_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-28 08:34:31.001 | event=scheduler_started | result=ok | taskId= | taskName= | info=batchId=f8a18b47-9851-4521-a6a1-3f8fd4e60d9e
+timestamp=2026-03-28 08:34:31.155 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 08:34:31.171 | event=next_alarm_scheduled | result=ok | taskId=4 | taskName=3 | info=triggerAt=1774674420000
+timestamp=2026-03-28 08:34:37.643 | event=cancel_reserve_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-28 08:34:37.704 | event=scheduler_stopped | result=cancelled | taskId= | taskName=
+timestamp=2026-03-28 08:34:40.296 | event=reserve_all_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-28 08:34:40.297 | event=scheduler_started | result=ok | taskId= | taskName= | info=batchId=5d4b5d43-115c-48f5-a254-9aeaa8eaa638
+timestamp=2026-03-28 08:34:40.421 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 08:34:40.436 | event=next_alarm_scheduled | result=ok | taskId=4 | taskName=3 | info=triggerAt=1774674420000
+timestamp=2026-03-28 08:34:42.053 | event=cancel_reserve_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-28 08:34:42.096 | event=scheduler_stopped | result=cancelled | taskId= | taskName=
+timestamp=2026-03-28 08:34:59.671 | event=reserve_all_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-28 08:34:59.673 | event=scheduler_started | result=ok | taskId= | taskName= | info=batchId=726790a9-bc96-4f25-a697-7c368467378e
+timestamp=2026-03-28 08:34:59.796 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 08:34:59.806 | event=next_alarm_scheduled | result=ok | taskId=4 | taskName=3 | info=triggerAt=1774674420000
+timestamp=2026-03-28 08:35:01.165 | event=cancel_reserve_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-28 08:35:01.209 | event=scheduler_stopped | result=cancelled | taskId= | taskName=
+timestamp=2026-03-28 08:35:04.663 | event=reserve_all_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-28 08:35:04.666 | event=scheduler_started | result=ok | taskId= | taskName= | info=batchId=a9388ab1-7b49-416d-b36f-dc43952bdc86
+timestamp=2026-03-28 08:35:04.773 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 08:35:04.782 | event=next_alarm_scheduled | result=ok | taskId=4 | taskName=3 | info=triggerAt=1774674420000
+timestamp=2026-03-28 08:35:20.568 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 08:35:20.624 | event=next_alarm_scheduled | result=ok | taskId=4 | taskName=3 | info=triggerAt=1774674420000
+timestamp=2026-03-28 08:35:54.612 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 08:35:54.672 | event=next_alarm_scheduled | result=ok | taskId=4 | taskName=3 | info=triggerAt=1774674420000
+timestamp=2026-03-28 08:36:08.165 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 08:36:08.197 | event=next_alarm_scheduled | result=ok | taskId=4 | taskName=3 | info=triggerAt=1774674420000
+timestamp=2026-03-28 09:14:04.629 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 09:14:04.668 | event=next_alarm_scheduled | result=ok | taskId=4 | taskName=3 | info=triggerAt=1774674420000
+timestamp=2026-03-28 09:14:08.019 | event=cancel_reserve_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-28 09:14:08.081 | event=scheduler_stopped | result=cancelled | taskId= | taskName=
+timestamp=2026-03-28 09:14:38.334 | event=task_updated | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:14:49.795 | event=task_updated | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:15:36.077 | event=task_updated | result=ok | taskId=3 | taskName=2
+timestamp=2026-03-28 09:15:37.526 | event=reserve_all_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-28 09:15:37.527 | event=scheduler_started | result=ok | taskId= | taskName= | info=batchId=9b3f0531-74cf-4572-b35a-85483ccb5439
+timestamp=2026-03-28 09:15:37.690 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 09:15:37.706 | event=next_alarm_scheduled | result=ok | taskId=4 | taskName=3 | info=triggerAt=1774661400000
+timestamp=2026-03-28 09:30:00.175 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 09:30:00.234 | event=task_triggered | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:30:00.290 | event=next_alarm_scheduled | result=ok | taskId=3 | taskName=2 | info=triggerAt=1774690200000
+timestamp=2026-03-28 09:30:00.304 | event=bluetooth_route_prepared | result=ok | taskId= | taskName= | info=a2dp=true headset=true device=true
+timestamp=2026-03-28 09:30:01.997 | event=root_playback_window_prepared | result=ok | taskId= | taskName= | info=playback_window_ready
+timestamp=2026-03-28 09:30:06.525 | event=root_brightness_dimmed | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_dimmed
+timestamp=2026-03-28 09:30:06.534 | event=playback_started | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:30:06.561 | event=root_brightness_dimmed | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_dimmed
+timestamp=2026-03-28 09:30:06.574 | event=playback_started | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:30:06.744 | event=root_brightness_dimmed | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_dimmed
+timestamp=2026-03-28 09:30:06.758 | event=playback_started | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:30:06.821 | event=root_brightness_dimmed | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_dimmed
+timestamp=2026-03-28 09:30:06.829 | event=playback_started | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:30:06.939 | event=root_brightness_dimmed | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_dimmed
+timestamp=2026-03-28 09:30:06.948 | event=playback_started | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:30:06.956 | event=root_brightness_dimmed | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_dimmed
+timestamp=2026-03-28 09:30:06.963 | event=playback_started | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:30:06.991 | event=root_brightness_dimmed | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_dimmed
+timestamp=2026-03-28 09:30:06.997 | event=playback_started | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:30:42.832 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 09:30:42.896 | event=next_alarm_scheduled | result=ok | taskId=3 | taskName=2 | info=triggerAt=1774690200000
+timestamp=2026-03-28 09:30:52.629 | event=cancel_reserve_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-28 09:30:52.697 | event=playback_failed | result=failed | taskId=4 | taskName=3 | info=StandaloneCoroutine was cancelled
+timestamp=2026-03-28 09:30:52.703 | event=playback_failed | result=failed | taskId=4 | taskName=3 | info=StandaloneCoroutine was cancelled
+timestamp=2026-03-28 09:30:52.708 | event=playback_failed | result=failed | taskId=4 | taskName=3 | info=StandaloneCoroutine was cancelled
+timestamp=2026-03-28 09:30:52.721 | event=playback_failed | result=failed | taskId=4 | taskName=3 | info=StandaloneCoroutine was cancelled
+timestamp=2026-03-28 09:30:52.731 | event=playback_failed | result=failed | taskId=4 | taskName=3 | info=StandaloneCoroutine was cancelled
+timestamp=2026-03-28 09:30:52.739 | event=playback_failed | result=failed | taskId=4 | taskName=3 | info=StandaloneCoroutine was cancelled
+timestamp=2026-03-28 09:30:52.752 | event=playback_failed | result=failed | taskId=4 | taskName=3 | info=StandaloneCoroutine was cancelled
+timestamp=2026-03-28 09:30:52.761 | event=scheduler_stopped | result=cancelled | taskId= | taskName=
+timestamp=2026-03-28 09:30:54.092 | event=root_brightness_restored | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_restored
+timestamp=2026-03-28 09:30:54.095 | event=root_brightness_restored | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_restored
+timestamp=2026-03-28 09:38:45.021 | event=task_updated | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:39:00.019 | event=task_updated | result=ok | taskId=3 | taskName=2
+timestamp=2026-03-28 09:39:33.698 | event=task_updated | result=ok | taskId=3 | taskName=2
+timestamp=2026-03-28 09:39:50.506 | event=task_updated | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:39:52.084 | event=reserve_all_clicked | result=ok | taskId= | taskName=
+timestamp=2026-03-28 09:39:52.086 | event=scheduler_started | result=ok | taskId= | taskName= | info=batchId=4a09dab0-98fd-47b6-8325-f8a0ef49c96f
+timestamp=2026-03-28 09:39:52.209 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 09:39:52.217 | event=next_alarm_scheduled | result=ok | taskId=4 | taskName=3 | info=triggerAt=1774662300000
+timestamp=2026-03-28 09:45:00.132 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 09:45:00.170 | event=task_triggered | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:45:00.204 | event=next_alarm_scheduled | result=ok | taskId=3 | taskName=2 | info=triggerAt=1774690200000
+timestamp=2026-03-28 09:45:00.219 | event=bluetooth_route_prepared | result=ok | taskId= | taskName= | info=a2dp=true headset=true device=true
+timestamp=2026-03-28 09:45:01.763 | event=root_playback_window_prepared | result=ok | taskId= | taskName= | info=playback_window_ready
+timestamp=2026-03-28 09:45:02.239 | event=playback_started | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:45:02.243 | event=playback_started | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:45:02.245 | event=playback_started | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:45:02.247 | event=playback_started | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:45:02.253 | event=playback_started | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:45:04.978 | event=root_brightness_dimmed | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_dimmed
+timestamp=2026-03-28 09:45:04.986 | event=playback_started | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:45:05.069 | event=root_brightness_dimmed | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_dimmed
+timestamp=2026-03-28 09:45:05.084 | event=playback_started | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:45:05.235 | event=root_brightness_dimmed | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_dimmed
+timestamp=2026-03-28 09:45:05.242 | event=playback_started | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 09:51:07.900 | event=bluetooth_route_prepared | result=ok | taskId= | taskName= | info=a2dp=true headset=true device=true
+timestamp=2026-03-28 09:51:09.018 | event=root_playback_window_prepared | result=ok | taskId= | taskName= | info=playback_window_ready
+timestamp=2026-03-28 09:56:59.855 | event=bluetooth_route_prepared | result=ok | taskId= | taskName= | info=a2dp=true headset=true device=true
+timestamp=2026-03-28 09:57:01.017 | event=root_playback_window_prepared | result=ok | taskId= | taskName= | info=playback_window_ready
+timestamp=2026-03-28 10:02:22.488 | event=playback_finished | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 10:02:22.499 | event=playback_finished | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 10:02:22.509 | event=playback_finished | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 10:02:22.517 | event=playback_finished | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 10:02:22.522 | event=playback_finished | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 10:02:22.527 | event=playback_finished | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 10:02:22.534 | event=playback_finished | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 10:02:22.541 | event=playback_finished | result=ok | taskId=4 | taskName=3
+timestamp=2026-03-28 17:30:00.127 | event=root_process_protected | result=ok | taskId= | taskName= | info=pid=27500 oom_score_adj=-1000
+timestamp=2026-03-28 17:30:00.152 | event=task_triggered | result=ok | taskId=3 | taskName=2
+timestamp=2026-03-28 17:30:00.198 | event=scheduler_stopped | result=completed | taskId= | taskName= | info=all tasks finished
+timestamp=2026-03-28 17:30:00.204 | event=bluetooth_route_prepared | result=ok | taskId= | taskName= | info=a2dp=true headset=true device=true
+timestamp=2026-03-28 17:30:01.753 | event=root_playback_window_prepared | result=ok | taskId= | taskName= | info=playback_window_ready
+timestamp=2026-03-28 17:30:02.001 | event=playback_started | result=ok | taskId=3 | taskName=2
+timestamp=2026-03-28 17:30:02.002 | event=playback_started | result=ok | taskId=3 | taskName=2
+timestamp=2026-03-28 17:30:02.004 | event=playback_started | result=ok | taskId=3 | taskName=2
+timestamp=2026-03-28 17:30:02.012 | event=playback_started | result=ok | taskId=3 | taskName=2
+timestamp=2026-03-28 17:30:02.012 | event=playback_started | result=ok | taskId=3 | taskName=2
+timestamp=2026-03-28 17:30:02.018 | event=playback_started | result=ok | taskId=3 | taskName=2
+timestamp=2026-03-28 17:30:02.019 | event=playback_started | result=ok | taskId=3 | taskName=2
+timestamp=2026-03-28 17:30:02.020 | event=playback_started | result=ok | taskId=3 | taskName=2
+timestamp=2026-03-28 17:30:12.161 | event=playback_failed | result=bluetooth_lost | taskId=3 | taskName=2 | info=bluetooth disconnected during playback
+timestamp=2026-03-28 17:30:12.165 | event=playback_failed | result=bluetooth_lost | taskId=3 | taskName=2 | info=bluetooth disconnected during playback
+timestamp=2026-03-28 17:30:12.173 | event=playback_failed | result=bluetooth_lost | taskId=3 | taskName=2 | info=bluetooth disconnected during playback
+timestamp=2026-03-28 17:30:12.173 | event=playback_failed | result=bluetooth_lost | taskId=3 | taskName=2 | info=bluetooth disconnected during playback
+timestamp=2026-03-28 17:30:12.180 | event=playback_failed | result=bluetooth_lost | taskId=3 | taskName=2 | info=bluetooth disconnected during playback
+timestamp=2026-03-28 17:30:12.202 | event=playback_failed | result=bluetooth_lost | taskId=3 | taskName=2 | info=bluetooth disconnected during playback
+timestamp=2026-03-28 17:30:12.226 | event=playback_failed | result=bluetooth_lost | taskId=3 | taskName=2 | info=bluetooth disconnected during playback
+timestamp=2026-03-28 17:30:12.246 | event=playback_failed | result=bluetooth_lost | taskId=3 | taskName=2 | info=bluetooth disconnected during playback
+timestamp=2026-03-28 17:30:14.580 | event=root_brightness_restored | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_restored
+timestamp=2026-03-28 17:30:14.584 | event=root_brightness_restored | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_restored
+timestamp=2026-03-28 17:30:14.632 | event=root_brightness_restored | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_restored
+timestamp=2026-03-28 17:30:14.634 | event=root_brightness_restored | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_restored
+timestamp=2026-03-28 17:30:14.653 | event=root_brightness_restored | result=ok | taskId= | taskName= | info=mode=0 brightness=75 output=brightness_restored

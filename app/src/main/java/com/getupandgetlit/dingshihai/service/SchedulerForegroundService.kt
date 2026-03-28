@@ -24,11 +24,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
 class SchedulerForegroundService : Service() {
-    private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private val serviceJob = SupervisorJob()
+    private val serviceScope = CoroutineScope(serviceJob + Dispatchers.Default)
     private val container by lazy { (application as DingShiHaiApp).appContainer }
     private val triggerMutex = Mutex()
     private var processWakeLock: PowerManager.WakeLock? = null
@@ -67,10 +69,11 @@ class SchedulerForegroundService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onDestroy() {
-        serviceScope.launch {
+        runBlocking {
             restoreBrightnessIfNeeded()
         }
         releaseWakeLocks()
+        serviceJob.cancel()
         super.onDestroy()
     }
 
