@@ -51,6 +51,7 @@ class SchedulerForegroundService : Service() {
             ACTION_CANCEL_RESERVE -> serviceScope.launch { handleCancelReserve() }
             ACTION_GUARD_ALARM, ACTION_RECONCILE_BATCH, null -> serviceScope.launch {
                 ensureForeground()
+                acquireProcessWakeLock(PROCESS_WAKE_LOCK_HANDOFF_MS)
                 container.rootOps.protectCurrentProcess(Process.myPid())
                 if (intent?.getLongExtra(EXTRA_TASK_ID, -1L) ?: -1L > 0L) {
                     handleAlarmTrigger(
@@ -121,7 +122,6 @@ class SchedulerForegroundService : Service() {
             message = "batchId=$batchId",
         )
         ensureForeground()
-        container.rootOps.protectCurrentProcess(Process.myPid())
         scheduleNextExactAlarmOrFinish()
     }
 
@@ -214,6 +214,7 @@ class SchedulerForegroundService : Service() {
         }
         container.taskRepository.markTaskStatus(task.id, TaskStatus.TRIGGERED)
         container.taskRepository.updateCurrentPlayingTask(task.id)
+        acquireProcessWakeLock(PROCESS_WAKE_LOCK_ACTIVE_TASK_MS)
         container.playbackController.startTask(task)
         scheduleNextExactAlarmOrFinish()
     }
@@ -248,6 +249,7 @@ class SchedulerForegroundService : Service() {
             task = nextTask,
             message = "triggerAt=$triggerAtMillis",
         )
+        stopIfIdle()
     }
 
     private suspend fun handlePlaybackEvent(event: PlaybackEvent) {
@@ -314,8 +316,10 @@ class SchedulerForegroundService : Service() {
 
     private suspend fun stopIfIdle() {
         val runtimeState = container.taskRepository.getRuntimeState()
-        if (!runtimeState.batchActive && runtimeState.currentPlayingTaskId == null) {
-            container.alarmCoordinator.cancelGuardAlarm()
+        if (runtimeState.currentPlayingTaskId == null) {
+            if (!runtimeState.batchActive) {
+                container.alarmCoordinator.cancelGuardAlarm()
+            }
             releaseWakeLocks()
             restoreBrightnessIfNeeded()
             if (startedForeground) {
@@ -331,7 +335,6 @@ class SchedulerForegroundService : Service() {
             startForeground(NOTIFICATION_ID, buildNotification())
             startedForeground = true
         }
-        acquireProcessWakeLock()
     }
 
     private fun buildNotification(): Notification {
@@ -354,15 +357,15 @@ class SchedulerForegroundService : Service() {
         manager.createNotificationChannel(channel)
     }
 
-    private fun acquireProcessWakeLock() {
-        if (processWakeLock?.isHeld == true) return
+    private fun acquireProcessWakeLock(timeoutMs: Long) {
         val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        processWakeLock?.takeIf { it.isHeld }?.release()
         processWakeLock = powerManager.newWakeLock(
             PowerManager.PARTIAL_WAKE_LOCK,
             "dingshihai::process",
         ).apply {
             setReferenceCounted(false)
-            acquire(10 * 60 * 60 * 1000L)
+            acquire(timeoutMs)
         }
     }
 
@@ -398,6 +401,8 @@ class SchedulerForegroundService : Service() {
     }
 
     companion object {
+        private const val PROCESS_WAKE_LOCK_HANDOFF_MS = 2 * 60 * 1000L
+        private const val PROCESS_WAKE_LOCK_ACTIVE_TASK_MS = 10 * 60 * 60 * 1000L
         private const val CHANNEL_ID = "scheduler_foreground"
         private const val NOTIFICATION_ID = 100
         private const val ACTION_RESERVE_ALL = "com.getupandgetlit.dingshihai.RESERVE_ALL"
