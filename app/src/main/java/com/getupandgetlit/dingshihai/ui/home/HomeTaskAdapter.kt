@@ -12,9 +12,12 @@ import com.getupandgetlit.dingshihai.util.displayName
 import com.getupandgetlit.dingshihai.util.displayTime
 import com.getupandgetlit.dingshihai.util.playPlanRes
 
-class HomeTaskAdapter : ListAdapter<TaskEntity, HomeTaskAdapter.TaskViewHolder>(DiffCallback) {
+class HomeTaskAdapter(
+    private val onReserveSelectionChanged: (taskId: Long, selected: Boolean) -> Unit,
+) : ListAdapter<TaskEntity, HomeTaskAdapter.TaskViewHolder>(DiffCallback) {
     private var openItemId: Long? = null
     private var openSide: SwipeOpenSide? = null
+    private var reserveSelectionEnabled = true
 
     init {
         setHasStableIds(true)
@@ -32,7 +35,15 @@ class HomeTaskAdapter : ListAdapter<TaskEntity, HomeTaskAdapter.TaskViewHolder>(
         holder.bind(
             item = item,
             openSide = if (item.id == openItemId) openSide else null,
+            reserveSelectionEnabled = reserveSelectionEnabled,
+            onReserveSelectionChanged = onReserveSelectionChanged,
         )
+    }
+
+    fun setReserveSelectionEnabled(enabled: Boolean) {
+        if (reserveSelectionEnabled == enabled) return
+        reserveSelectionEnabled = enabled
+        notifyDataSetChanged()
     }
 
     fun openItem(position: Int, side: SwipeOpenSide) {
@@ -84,7 +95,12 @@ class HomeTaskAdapter : ListAdapter<TaskEntity, HomeTaskAdapter.TaskViewHolder>(
     ) : RecyclerView.ViewHolder(binding.root) {
         val foregroundView = binding.foregroundContainer
 
-        fun bind(item: TaskEntity, openSide: SwipeOpenSide?) {
+        fun bind(
+            item: TaskEntity,
+            openSide: SwipeOpenSide?,
+            reserveSelectionEnabled: Boolean,
+            onReserveSelectionChanged: (taskId: Long, selected: Boolean) -> Unit,
+        ) {
             binding.titleView.text = binding.root.context.getString(
                 R.string.task_title_format,
                 item.displayName(),
@@ -95,6 +111,14 @@ class HomeTaskAdapter : ListAdapter<TaskEntity, HomeTaskAdapter.TaskViewHolder>(
                 item.status,
             )
             binding.planView.setText(item.playPlanRes())
+            binding.reserveCheckbox.setOnCheckedChangeListener(null)
+            binding.reserveCheckbox.isChecked = item.selectedForReserve
+            binding.reserveCheckbox.isEnabled = reserveSelectionEnabled
+            binding.reserveCheckbox.setOnCheckedChangeListener { _, isChecked ->
+                if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
+                    onReserveSelectionChanged(item.id, isChecked)
+                }
+            }
             binding.foregroundContainer.post {
                 binding.foregroundContainer.translationX = when (openSide) {
                     SwipeOpenSide.LEFT -> binding.editActionView.width.toFloat()

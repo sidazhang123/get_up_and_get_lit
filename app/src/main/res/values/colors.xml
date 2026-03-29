@@ -8,6 +8,8 @@
     <color name="black">#000000</color>
     <color name="status_green">#246A25</color>
     <color name="status_red">#9A031E</color>
+    <color name="batch_active_background">#D8F0D2</color>
+    <color name="cancel_reserve_background">#F4E6A2</color>
     <color name="swipe_edit_green">#2E7D32</color>
     <color name="swipe_delete_red">#E53935</color>
 </resources>

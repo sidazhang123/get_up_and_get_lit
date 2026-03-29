@@ -2,6 +2,7 @@ package com.getupandgetlit.dingshihai.ui.taskform
 
 import android.content.Context
 import android.content.Intent
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -18,8 +19,11 @@ import com.getupandgetlit.dingshihai.domain.model.PlayMode
 import com.getupandgetlit.dingshihai.ui.common.AppViewModelFactory
 import com.getupandgetlit.dingshihai.util.doAfterTextChangedCompat
 import java.util.Locale
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TaskFormActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTaskFormBinding
@@ -34,6 +38,8 @@ class TaskFormActivity : AppCompatActivity() {
         uri ?: return@registerForActivityResult
         handleFilePicked(uri)
     }
+    private var durationLoadJob: Job? = null
+    private var lastDurationUri: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,6 +119,10 @@ class TaskFormActivity : AppCompatActivity() {
                     binding.forceBluetoothPlaybackCheckbox.isChecked = state.draft.forceBluetoothPlayback
                 }
                 binding.fileNameView.text = state.draft.fileName
+                if (lastDurationUri != state.draft.fileUri) {
+                    lastDurationUri = state.draft.fileUri
+                    loadAudioDuration(state.draft.fileUri)
+                }
                 binding.singleMode.isChecked = state.draft.playMode == PlayMode.SINGLE
                 binding.intervalMode.isChecked = state.draft.playMode == PlayMode.INTERVAL
                 binding.intervalContainer.visibility =
@@ -153,6 +163,45 @@ class TaskFormActivity : AppCompatActivity() {
         }
         contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
         viewModel.updateFile(uri.toString(), name)
+    }
+
+    private fun loadAudioDuration(fileUri: String) {
+        durationLoadJob?.cancel()
+        if (fileUri.isBlank()) {
+            binding.fileDurationView.visibility = View.GONE
+            binding.fileDurationView.text = ""
+            return
+        }
+        durationLoadJob = lifecycleScope.launch {
+            val durationText = resolveAudioDurationText(fileUri)
+            if (durationText.isNullOrBlank()) {
+                binding.fileDurationView.visibility = View.GONE
+                binding.fileDurationView.text = ""
+            } else {
+                binding.fileDurationView.visibility = View.VISIBLE
+                binding.fileDurationView.text = getString(R.string.audio_duration_format, durationText)
+            }
+        }
+    }
+
+    private suspend fun resolveAudioDurationText(fileUri: String): String? {
+        return withContext(Dispatchers.IO) {
+            runCatching {
+                val retriever = MediaMetadataRetriever()
+                try {
+                    retriever.setDataSource(this@TaskFormActivity, Uri.parse(fileUri))
+                    val durationMs = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+                        ?.toLongOrNull()
+                        ?: return@withContext null
+                    val totalSeconds = durationMs / 1000L
+                    val minutes = totalSeconds / 60L
+                    val seconds = totalSeconds % 60L
+                    String.format(Locale.US, "%02d:%02d", minutes, seconds)
+                } finally {
+                    runCatching { retriever.release() }
+                }
+            }.getOrNull()
+        }
     }
 
     private inline fun syncTextIfNeeded(current: String, target: String, apply: () -> Unit) {

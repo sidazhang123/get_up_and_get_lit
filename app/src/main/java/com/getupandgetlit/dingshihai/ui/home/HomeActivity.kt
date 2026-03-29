@@ -3,6 +3,7 @@ package com.getupandgetlit.dingshihai.ui.home
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -28,7 +29,11 @@ class HomeActivity : AppCompatActivity() {
     private val viewModel: HomeViewModel by viewModels {
         AppViewModelFactory { HomeViewModel(appContainer.taskRepository) }
     }
-    private val adapter = HomeTaskAdapter()
+    private val adapter = HomeTaskAdapter { taskId, selected ->
+        lifecycleScope.launch {
+            appContainer.taskRepository.updateSelectedForReserve(taskId, selected)
+        }
+    }
     private lateinit var swipeController: TaskSwipeController
 
     private val permissionLauncher = registerForActivityResult(
@@ -110,11 +115,33 @@ class HomeActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.uiState.collectLatest { state ->
                 adapter.submitList(state.tasks)
-                binding.reserveButton.text = getString(
-                    if (state.batchActive) R.string.cancel_reserve else R.string.reserve_all
+                adapter.setReserveSelectionEnabled(!state.batchActive)
+                val reserveButtonTextRes = if (state.batchActive) {
+                    R.string.cancel_reserve
+                } else {
+                    R.string.reserve_all
+                }
+                binding.reserveButton.text = getString(reserveButtonTextRes)
+                binding.reserveButton.backgroundTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        this@HomeActivity,
+                        if (state.batchActive) R.color.cancel_reserve_background else R.color.brand_primary,
+                    ),
+                )
+                binding.reserveButton.setTextColor(
+                    ContextCompat.getColor(
+                        this@HomeActivity,
+                        if (state.batchActive) R.color.black else R.color.white,
+                    ),
                 )
                 binding.createButton.isEnabled = !state.batchActive
                 binding.emptyView.text = if (state.tasks.isEmpty()) getString(R.string.no_tasks) else ""
+                binding.root.setBackgroundColor(
+                    ContextCompat.getColor(
+                        this@HomeActivity,
+                        if (state.batchActive) R.color.batch_active_background else R.color.surface,
+                    ),
+                )
                 if (state.batchActive) {
                     swipeController.closeOpenItem()
                 }

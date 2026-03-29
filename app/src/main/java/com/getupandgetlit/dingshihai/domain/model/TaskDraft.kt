@@ -13,4 +13,5 @@ data class TaskDraft(
     val intervalMaxSec: Int? = null,
     val maxPlaybackMinutes: Int? = 0,
     val forceBluetoothPlayback: Boolean = true,
+    val selectedForReserve: Boolean = true,
 )

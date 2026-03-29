@@ -17,6 +17,7 @@ data class TaskEntity(
     val intervalMaxSec: Int?,
     val maxPlaybackMinutes: Int,
     val forceBluetoothPlayback: Boolean,
+    val selectedForReserve: Boolean,
     val status: String,
     val scheduledAtEpochMs: Long?,
     val createdAt: Long,

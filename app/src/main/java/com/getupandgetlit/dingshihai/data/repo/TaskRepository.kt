@@ -4,7 +4,6 @@ import androidx.room.withTransaction
 import com.getupandgetlit.dingshihai.data.db.AppDatabase
 import com.getupandgetlit.dingshihai.data.entity.RuntimeStateEntity
 import com.getupandgetlit.dingshihai.data.entity.TaskEntity
-import com.getupandgetlit.dingshihai.domain.model.PlayMode
 import com.getupandgetlit.dingshihai.domain.model.RuntimeState
 import com.getupandgetlit.dingshihai.domain.model.TaskDraft
 import com.getupandgetlit.dingshihai.domain.model.TaskDraftValidator
@@ -59,6 +58,7 @@ class TaskRepository(
             intervalMaxSec = draft.intervalMaxSec,
             maxPlaybackMinutes = requireNotNull(draft.maxPlaybackMinutes),
             forceBluetoothPlayback = draft.forceBluetoothPlayback,
+            selectedForReserve = draft.selectedForReserve,
             status = TaskStatus.UNTRIGGERED.value,
             scheduledAtEpochMs = null,
             createdAt = now,
@@ -84,8 +84,9 @@ class TaskRepository(
                 intervalMaxSec = draft.intervalMaxSec,
                 maxPlaybackMinutes = requireNotNull(draft.maxPlaybackMinutes),
                 forceBluetoothPlayback = draft.forceBluetoothPlayback,
+                selectedForReserve = draft.selectedForReserve,
                 updatedAt = now,
-            )
+            ),
         )
     }
 
@@ -93,6 +94,10 @@ class TaskRepository(
         taskDao.getTaskById(taskId)?.let { task ->
             taskDao.deleteTask(task)
         }
+    }
+
+    suspend fun updateSelectedForReserve(taskId: Long, selected: Boolean) {
+        taskDao.updateSelectedForReserve(taskId, selected, System.currentTimeMillis())
     }
 
     suspend fun setRuntimeState(state: RuntimeState) {
@@ -109,7 +114,7 @@ class TaskRepository(
             current.copy(
                 currentPlayingTaskId = taskId,
                 updatedAt = System.currentTimeMillis(),
-            )
+            ),
         )
     }
 
@@ -119,7 +124,7 @@ class TaskRepository(
             current.copy(
                 lastServiceHeartbeatAt = now,
                 updatedAt = now,
-            )
+            ),
         )
     }
 
@@ -127,6 +132,7 @@ class TaskRepository(
         val now = System.currentTimeMillis()
         database.withTransaction {
             taskDao.updateAllStatuses(TaskStatus.UNTRIGGERED.value, now)
+            taskDao.clearAllSchedules(now)
             scheduleMap.forEach { (taskId, scheduledAtEpochMs) ->
                 taskDao.updateScheduledTime(taskId, scheduledAtEpochMs, now)
             }
@@ -137,7 +143,7 @@ class TaskRepository(
                     currentPlayingTaskId = null,
                     lastServiceHeartbeatAt = now,
                     updatedAt = now,
-                )
+                ),
             )
         }
     }
@@ -164,7 +170,7 @@ class TaskRepository(
                     },
                     lastServiceHeartbeatAt = now,
                     updatedAt = now,
-                )
+                ),
             )
         }
     }

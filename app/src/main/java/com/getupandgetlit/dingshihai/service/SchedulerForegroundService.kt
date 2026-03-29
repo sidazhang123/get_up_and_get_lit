@@ -98,6 +98,18 @@ class SchedulerForegroundService : Service() {
             stopSelf()
             return
         }
+        val selectedTasks = tasks.filter { it.selectedForReserve }
+        if (selectedTasks.isEmpty()) {
+            serviceScope.launch(Dispatchers.Main) {
+                Toast.makeText(
+                    this@SchedulerForegroundService,
+                    getString(R.string.reserve_requires_selected_tasks),
+                    Toast.LENGTH_LONG,
+                ).show()
+            }
+            stopSelf()
+            return
+        }
         container.playbackController.stopCurrentPlayback("reserve_all")
         container.alarmCoordinator.cancelGuardAlarm()
 
@@ -113,7 +125,7 @@ class SchedulerForegroundService : Service() {
         }
 
         val batchId = UUID.randomUUID().toString()
-        val scheduleMap = container.batchScheduler.buildSchedule(tasks, System.currentTimeMillis())
+        val scheduleMap = container.batchScheduler.buildSchedule(selectedTasks, System.currentTimeMillis())
         container.taskRepository.startBatch(batchId, scheduleMap)
         container.appLogger.log(event = "reserve_all_clicked", result = "ok")
         container.appLogger.log(
