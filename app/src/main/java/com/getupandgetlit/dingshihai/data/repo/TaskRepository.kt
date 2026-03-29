@@ -58,6 +58,7 @@ class TaskRepository(
             intervalMinSec = draft.intervalMinSec,
             intervalMaxSec = draft.intervalMaxSec,
             maxPlaybackMinutes = requireNotNull(draft.maxPlaybackMinutes),
+            forceBluetoothPlayback = draft.forceBluetoothPlayback,
             status = TaskStatus.UNTRIGGERED.value,
             scheduledAtEpochMs = null,
             createdAt = now,
@@ -82,6 +83,7 @@ class TaskRepository(
                 intervalMinSec = draft.intervalMinSec,
                 intervalMaxSec = draft.intervalMaxSec,
                 maxPlaybackMinutes = requireNotNull(draft.maxPlaybackMinutes),
+                forceBluetoothPlayback = draft.forceBluetoothPlayback,
                 updatedAt = now,
             )
         )

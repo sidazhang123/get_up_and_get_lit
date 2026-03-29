@@ -141,13 +141,19 @@ class PlaybackController(
         } else {
             1
         }
+        val enforceBluetoothPlayback = task.forceBluetoothPlayback
         val maxPlaybackDurationMs = computeMaxPlaybackDurationMs(task.maxPlaybackMinutes)
         var hadTruncatedRounds = false
         repeat(iterations) { index ->
-            if (!bluetoothChecker.isBluetoothAudioAvailable()) {
+            if (enforceBluetoothPlayback && !bluetoothChecker.isBluetoothAudioAvailable()) {
                 return PlaybackResult.BluetoothLost
             }
-            val onceResult = playOnce(task.fileUri, maxPlaybackDurationMs, onStarted)
+            val onceResult = playOnce(
+                fileUri = task.fileUri,
+                maxPlaybackDurationMs = maxPlaybackDurationMs,
+                enforceBluetoothPlayback = enforceBluetoothPlayback,
+                onStarted = onStarted,
+            )
             when (onceResult) {
                 PlaybackOnceResult.Completed -> Unit
                 PlaybackOnceResult.TruncatedByLimit -> hadTruncatedRounds = true
@@ -172,7 +178,7 @@ class PlaybackController(
                 val waitMs = Random.nextInt(minSec, maxSec + 1) * 1000L
                 var elapsed = 0L
                 while (elapsed < waitMs) {
-                    if (!bluetoothChecker.isBluetoothAudioAvailable()) {
+                    if (enforceBluetoothPlayback && !bluetoothChecker.isBluetoothAudioAvailable()) {
                         return PlaybackResult.BluetoothLost
                     }
                     val step = min(500L, waitMs - elapsed)
@@ -194,19 +200,22 @@ class PlaybackController(
     private suspend fun playOnce(
         fileUri: String,
         maxPlaybackDurationMs: Long?,
+        enforceBluetoothPlayback: Boolean,
         onStarted: suspend () -> Unit,
     ): PlaybackOnceResult {
         val completion = CompletableDeferred<PlaybackOnceResult>()
         val started = CompletableDeferred<Unit>()
-        val routeState = bluetoothChecker.preparePlaybackRoute()
-        if (!routeState.available) {
-            return PlaybackOnceResult.BluetoothLost
+        if (enforceBluetoothPlayback) {
+            val routeState = bluetoothChecker.preparePlaybackRoute()
+            if (!routeState.available) {
+                return PlaybackOnceResult.BluetoothLost
+            }
+            appLogger.log(
+                event = "bluetooth_route_prepared",
+                result = "ok",
+                message = "a2dp=${routeState.a2dpConnected} headset=${routeState.headsetConnected} device=${routeState.outputDevicePresent}",
+            )
         }
-        appLogger.log(
-            event = "bluetooth_route_prepared",
-            result = "ok",
-            message = "a2dp=${routeState.a2dpConnected} headset=${routeState.headsetConnected} device=${routeState.outputDevicePresent}",
-        )
         rootOps.preparePlaybackWindow()
         val exoPlayer = withContext(Dispatchers.Main.immediate) {
             getOrCreatePlayer()
@@ -244,7 +253,7 @@ class PlaybackController(
             exoPlayer.play()
         }
         try {
-            when (val startResult = awaitPlaybackStart(started, completion, fileUri)) {
+            when (val startResult = awaitPlaybackStart(started, completion, fileUri, enforceBluetoothPlayback)) {
                 null -> onStarted()
                 else -> return startResult
             }
@@ -252,7 +261,7 @@ class PlaybackController(
             while (!completion.isCompleted) {
                 delay(250)
                 playbackElapsedMs += 250L
-                if (!bluetoothChecker.isBluetoothAudioAvailable()) {
+                if (enforceBluetoothPlayback && !bluetoothChecker.isBluetoothAudioAvailable()) {
                     completion.complete(PlaybackOnceResult.BluetoothLost)
                     break
                 }
@@ -281,14 +290,17 @@ class PlaybackController(
         started: CompletableDeferred<Unit>,
         completion: CompletableDeferred<PlaybackOnceResult>,
         fileUri: String,
+        enforceBluetoothPlayback: Boolean,
     ): PlaybackOnceResult? {
         var elapsedMs = 0L
         while (elapsedMs < PLAYBACK_START_TIMEOUT_MS && !started.isCompleted && !completion.isCompleted) {
             delay(200)
             elapsedMs += 200
-            val routeState = bluetoothChecker.preparePlaybackRoute()
-            if (!routeState.available) {
-                return PlaybackOnceResult.BluetoothLost
+            if (enforceBluetoothPlayback) {
+                val routeState = bluetoothChecker.preparePlaybackRoute()
+                if (!routeState.available) {
+                    return PlaybackOnceResult.BluetoothLost
+                }
             }
         }
         if (started.isCompleted || completion.isCompleted) {

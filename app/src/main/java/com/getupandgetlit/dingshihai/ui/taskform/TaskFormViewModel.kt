@@ -75,6 +75,10 @@ class TaskFormViewModel(
         }
     }
 
+    fun updateForceBluetoothPlayback(checked: Boolean) {
+        updateDraft { copy(forceBluetoothPlayback = checked) }
+    }
+
     suspend fun save(): TaskSaveResult {
         return when (repository.validateTask(_uiState.value.draft)) {
             TaskValidationResult.Valid -> {
@@ -115,6 +119,7 @@ class TaskFormViewModel(
                 intervalMinSec = task.intervalMinSec,
                 intervalMaxSec = task.intervalMaxSec,
                 maxPlaybackMinutes = task.maxPlaybackMinutes,
+                forceBluetoothPlayback = task.forceBluetoothPlayback,
             ),
         )
     }

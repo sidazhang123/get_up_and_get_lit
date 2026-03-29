@@ -46,4 +46,5 @@
     <string name="no_tasks">暂无任务</string>
     <string name="max_playback_minutes_hint">音频最多播放分钟数（0=不限制）</string>
     <string name="invalid_max_playback_minutes">音频最多播放分钟数必须为非负整数。</string>
+    <string name="force_bluetooth_playback">强制蓝牙播放</string>
 </resources>

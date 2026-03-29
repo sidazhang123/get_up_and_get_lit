@@ -202,7 +202,7 @@ class SchedulerForegroundService : Service() {
             result = "ok",
             task = task,
         )
-        if (!container.bluetoothChecker.isBluetoothAudioAvailable()) {
+        if (task.forceBluetoothPlayback && !container.bluetoothChecker.isBluetoothAudioAvailable()) {
             container.taskRepository.markTaskStatus(task.id, TaskStatus.BLUETOOTH_UNAVAILABLE)
             container.appLogger.log(
                 event = "bluetooth_unavailable",

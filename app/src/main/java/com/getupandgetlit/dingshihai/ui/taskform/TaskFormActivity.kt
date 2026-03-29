@@ -74,6 +74,9 @@ class TaskFormActivity : AppCompatActivity() {
         }
         binding.nameInput.doAfterTextChangedCompat(viewModel::updateName)
         binding.maxPlaybackMinutesInput.doAfterTextChangedCompat(viewModel::updateMaxPlaybackMinutes)
+        binding.forceBluetoothPlaybackCheckbox.setOnCheckedChangeListener { _, checked ->
+            viewModel.updateForceBluetoothPlayback(checked)
+        }
         binding.loopCountInput.doAfterTextChangedCompat(viewModel::updateLoopCount)
         binding.intervalMinInput.doAfterTextChangedCompat(viewModel::updateIntervalMin)
         binding.intervalMaxInput.doAfterTextChangedCompat(viewModel::updateIntervalMax)
@@ -105,6 +108,9 @@ class TaskFormActivity : AppCompatActivity() {
                     maxPlaybackText,
                 ) {
                     binding.maxPlaybackMinutesInput.setText(maxPlaybackText)
+                }
+                if (binding.forceBluetoothPlaybackCheckbox.isChecked != state.draft.forceBluetoothPlayback) {
+                    binding.forceBluetoothPlaybackCheckbox.isChecked = state.draft.forceBluetoothPlayback
                 }
                 binding.fileNameView.text = state.draft.fileName
                 binding.singleMode.isChecked = state.draft.playMode == PlayMode.SINGLE
